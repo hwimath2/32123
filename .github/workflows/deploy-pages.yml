@@ -1,0 +1,29 @@
+name: 📦 자동 Pages 배포
+
+on:
+  push:
+    branches: [ main ]
+
+permissions:
+  pages: write        # Pages 배포 권한
+  id-token: write     # configure-pages용 권한
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1) repo 체크아웃
+      - uses: actions/checkout@v3
+
+      # 2) Pages 설정 활성화
+      - uses: actions/configure-pages@v3
+
+      # 3) 아티팩트 업로드
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: .
+
+      # 4) Pages 배포
+      - uses: actions/deploy-pages@v3
